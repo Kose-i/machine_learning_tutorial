@@ -15,6 +15,7 @@ class GradientDescent:
     def solve(self, init):
         x = init
         path = []
+        path.append(x)
         grad = self.df(x)
         while (grad**2).sum() > self.eps**2:
             x = x - self.alpha * grad
