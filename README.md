@@ -18,3 +18,10 @@ sudo pip3 install cvxopt
 
 [フリーソフトではじめる機械学習入門(第2版)](https://www.morikita.co.jp/books/book/3274)
 [サポートgithub](https://github.com/MasahiroAraki/MachineLearning)
+
+[Pythonで動かして学ぶ！あたらしい機械学習の教科書](https://www.shoeisha.co.jp/book/detail/9784798144986)
+[sample-program](https://www.shoeisha.co.jp/book/download/9784798144986/detail)
+
+[倒立振子の作り方ゼロから学ぶ強化学習―物理シミュレーション×機械学習](http://www.natural-science.or.jp/article/20190124093733.php)
+[sample-code](http://cutt.jp/books/978-4-87783-440-1/sample.zip)
+
