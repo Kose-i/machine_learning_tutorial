@@ -4,10 +4,29 @@
 
 [Anaconda_install](https://www.anaconda.com/distribution/#download-section)
 
+```Chainer install
+sudo apt install python3-tk
+sudo apt install python3-pip
+sudo pip3 install --upgrade pip
+sudo pip3 install matplotlib
+sudo pip3 install chainer==4.0.0
+
+sudo wget https://github.com/chainer/archive/v4.0.0.tar.gz
+tar xzf v4.0.0.tar.gz
+python3 chainer-4.0.0/examples/mnist/train_mnist.py
 ```
 
-sudo pip3 install cvxopt
+```ChainerRL install
+sudo pip3 install chainerrl==0.3.0
+```
 
+```dot cmd
+sudo apt install graphviz
+dot -Tpng result/cg.dot -o result/cg.png
+```
+
+```cvxopt install
+sudo pip3 install cvxopt
 ```
 
 # 参考
@@ -22,8 +41,7 @@ sudo pip3 install cvxopt
 [Pythonで動かして学ぶ！あたらしい機械学習の教科書](https://www.shoeisha.co.jp/book/detail/9784798144986)
 [sample-program](https://www.shoeisha.co.jp/book/download/9784798144986/detail)
 
-[pythonによる深層強化学習]()
-[sample-program]()
+[pythonによる深層強化学習](https://www.ohmsha.co.jp/book/9784274222535/)
 
 [倒立振子の作り方ゼロから学ぶ強化学習―物理シミュレーション×機械学習](http://www.natural-science.or.jp/article/20190124093733.php)
 [sample-code](http://cutt.jp/books/978-4-87783-440-1/sample.zip)
