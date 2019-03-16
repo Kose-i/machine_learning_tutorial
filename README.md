@@ -25,6 +25,10 @@ sudo apt install graphviz
 dot -Tpng result/cg.dot -o result/cg.png
 ```
 
+```scikit-learn install
+sudo pip3 install scikit-learn
+```
+
 ```cvxopt install
 sudo pip3 install cvxopt
 ```
@@ -42,6 +46,8 @@ sudo pip3 install cvxopt
 [sample-program](https://www.shoeisha.co.jp/book/download/9784798144986/detail)
 
 [pythonによる深層強化学習](https://www.ohmsha.co.jp/book/9784274222535/)
+
+[最強囲碁AIアルファ碁 解体新書]()
 
 [倒立振子の作り方ゼロから学ぶ強化学習―物理シミュレーション×機械学習](http://www.natural-science.or.jp/article/20190124093733.php)
 [sample-code](http://cutt.jp/books/978-4-87783-440-1/sample.zip)
