@@ -47,9 +47,11 @@ sudo pip3 install cvxopt
 
 [pythonによる深層強化学習](https://www.ohmsha.co.jp/book/9784274222535/)
 
+[機械学習と深層学習 ―C言語によるシミュレーション―](https://shop.ohmsha.co.jp/shopdetail/000000004615/)
+
 [最強囲碁AIアルファ碁 解体新書](https://www.shoeisha.co.jp/book/detail/9784798152561)
 
-[最強囲碁AIアルファ碁 解体新書 アルファ碁ゼロ対応]()
+[最強囲碁AIアルファ碁 解体新書 アルファ碁ゼロ対応](https://www.shoeisha.co.jp/book/detail/9784798157771)
 
 [将棋AIで学ぶディープラーニング](https://book.mynavi.jp/ec/products/detail/id=88752)
 [sample-code](https://github.com/TadaoYamaoka/python-dlshogi)
