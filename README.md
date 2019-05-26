@@ -59,3 +59,4 @@ sudo pip3 install cvxopt
 [倒立振子の作り方ゼロから学ぶ強化学習―物理シミュレーション×機械学習](http://www.natural-science.or.jp/article/20190124093733.php)
 [sample-code](http://cutt.jp/books/978-4-87783-440-1/sample.zip)
 
+[C++とJavaでつくるニューラルネットワーク](https://www.personal-media.co.jp/book/comp/247.html)
