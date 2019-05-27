@@ -60,3 +60,6 @@ sudo pip3 install cvxopt
 [sample-code](http://cutt.jp/books/978-4-87783-440-1/sample.zip)
 
 [C++とJavaでつくるニューラルネットワーク](https://www.personal-media.co.jp/book/comp/247.html)
+
+[事例＋演習で学ぶ機械学習](https://www.morikita.co.jp/books/book/2876)
+
