@@ -63,3 +63,4 @@ sudo pip3 install cvxopt
 
 [事例＋演習で学ぶ機械学習](https://www.morikita.co.jp/books/book/2876)
 
+[ディープラーニング入門 Chainer チュートリアル](https://tutorials.chainer.org/ja/index.html)
