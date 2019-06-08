@@ -39,6 +39,8 @@ sudo pip3 install cvxopt
 
 [機械学習と深層学習](https://www.ohmsha.co.jp/book/9784274222269)
 
+[Python機械学習プログラミング 達人データサイエンティストによる理論と実践](https://book.impress.co.jp/books/1115101122)
+
 [フリーソフトではじめる機械学習入門(第2版)](https://www.morikita.co.jp/books/book/3274)
 [サポートgithub](https://github.com/MasahiroAraki/MachineLearning)
 
