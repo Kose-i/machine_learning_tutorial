@@ -31,7 +31,10 @@ class OR_gate{
       weight[2] = 0.2;
     }
     double predict(const std::vector<int>& dataTest) const {
-      return weight[0]*dataTest[0]+weight[1]*dataTest[1]+weight[2];
+      double answer = weight[0]*dataTest[0]+weight[1]*dataTest[1]+weight[2];
+      if (answer < 0) return 0;
+      else if (1 < answer) return 1;
+      return answer;
     }
     void print() {
       for (auto i = 0;i < 4;++i) {
