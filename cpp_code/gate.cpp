@@ -7,14 +7,14 @@ struct Data_training_pair{
   std::vector<int> training_answer;
 };
 
-class OR_gate{
-  private:
+class Gate{
+  protected:
     std::vector<std::vector<int>> training_data;
     std::vector<int> training_answer;
     std::vector<double> weight;
     const double learning_rate;
   public:
-    OR_gate():training_data(4,std::vector<int>(2)), training_answer(4), weight(3), learning_rate(0.3) {
+    Gate():training_data(4,std::vector<int>(2)), training_answer(4), weight(3), learning_rate(0.3) {
       training_data[0] = {0,0};
       training_answer[0] = {0};
       training_data[1] = {0,1};
@@ -69,8 +69,54 @@ class OR_gate{
     }
 };
 
+class AND_gate: public Gate
+{
+  public:
+    AND_gate(){
+      training_data[0] = {0,0};
+      training_answer[0] = {0};
+      training_data[1] = {0,1};
+      training_answer[1] = {0};
+      training_data[2] = {1,0};
+      training_answer[2] = {0};
+      training_data[3] = {1,1};
+      training_answer[3] = {1};
+      initial_weight();
+    }
+};
+class OR_gate: public Gate
+{
+  public:
+    OR_gate(){
+      training_data[0] = {0,0};
+      training_answer[0] = {0};
+      training_data[1] = {0,1};
+      training_answer[1] = {1};
+      training_data[2] = {1,0};
+      training_answer[2] = {1};
+      training_data[3] = {1,1};
+      training_answer[3] = {1};
+      initial_weight();
+    }
+};
+class NOR_gate: public Gate
+{
+  public:
+    NOR_gate(){
+      training_data[0] = {0,0};
+      training_answer[0] = {1};
+      training_data[1] = {0,1};
+      training_answer[1] = {0};
+      training_data[2] = {1,0};
+      training_answer[2] = {0};
+      training_data[3] = {1,1};
+      training_answer[3] = {0};
+      initial_weight();
+    }
+};
+
 int main(int argc, char** argv) {
-  OR_gate test;
+  NOR_gate test;
   test.print();
   for (auto i = 0;i < 30;++i) {
     test.learn();
