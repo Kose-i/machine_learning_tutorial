@@ -42,7 +42,7 @@ class TwoGate{
       for (auto i = 0;i < 2;++i) {
         tmp_output[i] = weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2];
       }
-      double answer = dataTest[0]*weight2[0]+dataTest[1]*weight2[1]+weight2[2];
+      double answer = tmp_output[0]*weight2[0]+tmp_output[1]*weight2[1]+weight2[2];
       if (answer < 0) return 0;
       else if (1 < answer) return 1;
       return answer;
@@ -51,7 +51,7 @@ class TwoGate{
       for (auto i = 0;i < 2;++i) {
         output[i] = weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2];
       }
-      double answer = dataTest[0]*weight2[0]+dataTest[1]*weight2[1]+weight2[2];
+      double answer = output[0]*weight2[0]+output[1]*weight2[1]+weight2[2];
       if (answer < 0) return 0;
       else if (1 < answer) return 1;
       return answer;
@@ -69,31 +69,36 @@ class TwoGate{
       return sum;
     }
     void learn() {
-      double sum_error = 0.0;
       std::vector<double> predict_answer(4);
       std::vector<double> predict_error(4);
+      std::vector<double> sum_inner_output(2);
       for (auto i = 0;i < 4;++i) {
-        predict_answer[i] = predict(training_data[i]);
-        predict_error[i] = predict_answer[i] - training_answer[i];
-        sum_error += learning_rate*predict_answer[i]-training_answer[i];
+        std::vector<double> inner_output(2);
+        predict_answer[i] = predict(training_data[i], inner_output);
+        predict_error[0] = predict_answer[i] - training_answer[i];
+        sum_inner_output[0] += inner_output[0];
+        sum_inner_output[1] += inner_output[1];
       }
       for (auto i = 0;i < 4;++i) {
-        weight2[0] -= learning_rate*predict_error[i]*training_data[i][0];
+        weight2[0] -= learning_rate*predict_error[i]*sum_inner_output[0];
       }
       for (auto i = 0;i < 4;++i) {
-        weight2[1] -= learning_rate*predict_error[i]*training_data[i][1];
+        weight2[1] -= learning_rate*predict_error[i]*sum_inner_output[1];
       }
       for (auto i = 0;i < 4;++i) {
         weight2[2] -= learning_rate*predict_error[i];
       }
       for (auto i = 0;i < 4;++i) {
         weight[0][0] -= learning_rate*predict_error[i]*training_data[i][0];
+        weight[1][0] -= learning_rate*predict_error[i]*training_data[i][0];
       }
       for (auto i = 0;i < 4;++i) {
         weight[0][1] -= learning_rate*predict_error[i]*training_data[i][1];
+        weight[1][1] -= learning_rate*predict_error[i]*training_data[i][1];
       }
       for (auto i = 0;i < 4;++i) {
         weight[0][2] -= learning_rate*predict_error[i];
+        weight[1][2] -= learning_rate*predict_error[i];
       }
     }
 };
