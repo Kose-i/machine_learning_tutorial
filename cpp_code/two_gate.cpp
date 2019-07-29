@@ -75,7 +75,7 @@ class TwoGate{
       for (auto i = 0;i < 4;++i) {
         std::vector<double> inner_output(2);
         predict_answer[i] = predict(training_data[i], inner_output);
-        predict_error[0] = predict_answer[i] - training_answer[i];
+        predict_error[i] = predict_answer[i] - training_answer[i];
         sum_inner_output[0] += inner_output[0];
         sum_inner_output[1] += inner_output[1];
       }
@@ -89,17 +89,23 @@ class TwoGate{
         weight2[2] -= learning_rate*predict_error[i];
       }
       for (auto i = 0;i < 4;++i) {
-        weight[0][0] -= learning_rate*predict_error[i]*training_data[i][0];
-        weight[1][0] -= learning_rate*predict_error[i]*training_data[i][0];
+        weight[0][0] -= learning_rate*predict_error[i]*sum_inner_output[0]*training_data[i][0];
+        weight[1][0] -= learning_rate*predict_error[i]*sum_inner_output[1]*training_data[i][0];
       }
       for (auto i = 0;i < 4;++i) {
-        weight[0][1] -= learning_rate*predict_error[i]*training_data[i][1];
-        weight[1][1] -= learning_rate*predict_error[i]*training_data[i][1];
+        weight[0][1] -= learning_rate*predict_error[i]*sum_inner_output[0]*training_data[i][1];
+        weight[1][1] -= learning_rate*predict_error[i]*sum_inner_output[1]*training_data[i][1];
       }
       for (auto i = 0;i < 4;++i) {
         weight[0][2] -= learning_rate*predict_error[i];
         weight[1][2] -= learning_rate*predict_error[i];
       }
+//#define DEBUG
+#ifndef DEBUG
+      std::cout << weight[0][0] << ' ' << weight[0][1] << ' ' << weight[0][2] << '\n';
+      std::cout << weight[1][0] << ' ' << weight[1][1] << ' ' << weight[1][2] << '\n';
+      std::cout << weight2[0]   << ' ' << weight2[1]   << ' ' << weight2[2]   << '\n';
+#endif
     }
 };
 
