@@ -7,6 +7,14 @@ struct Data_training_pair{
   std::vector<int> training_answer;
 };
 
+constexpr double sigmoid(const double& t) {
+  return 1/(1+std::exp(-t));
+}
+constexpr double  sigmoid_df(const double& t) {
+  double tmp = sigmoid(t);
+  return tmp*(1-tmp);
+}
+
 class TwoGate{
   protected:
     std::vector<std::vector<int>> training_data;
@@ -27,15 +35,15 @@ class TwoGate{
       initial_weight();
     }
     void initial_weight() {
-      weight[0][0] = 0.3;
-      weight[0][1] = 0.4;
-      weight[0][2] = 0.2;
-      weight[1][0] = 0.3;
-      weight[1][1] = 0.4;
-      weight[1][2] = 0.2;
-      weight2[0] = 0.3;
-      weight2[1] = 0.4;
-      weight2[2] = 0.2;
+      weight[0][0] = 1;
+      weight[0][1] = 2;
+      weight[0][2] = -3;
+      weight[1][0] = 3;
+      weight[1][1] = 2;
+      weight[1][2] = 5;
+      weight2[0] = 3;
+      weight2[1] = 4;
+      weight2[2] = 2;
     }
     double predict(const std::vector<int>& dataTest) const {
       std::vector<double> tmp_output(2,0.0);
@@ -81,27 +89,20 @@ class TwoGate{
       }
       for (auto i = 0;i < 4;++i) {
         weight2[0] -= learning_rate*predict_error[i]*sum_inner_output[0];
-      }
-      for (auto i = 0;i < 4;++i) {
         weight2[1] -= learning_rate*predict_error[i]*sum_inner_output[1];
-      }
-      for (auto i = 0;i < 4;++i) {
         weight2[2] -= learning_rate*predict_error[i];
       }
       for (auto i = 0;i < 4;++i) {
-        weight[0][0] -= learning_rate*predict_error[i]*sum_inner_output[0]*training_data[i][0];
-        weight[1][0] -= learning_rate*predict_error[i]*sum_inner_output[1]*training_data[i][0];
-      }
-      for (auto i = 0;i < 4;++i) {
-        weight[0][1] -= learning_rate*predict_error[i]*sum_inner_output[0]*training_data[i][1];
-        weight[1][1] -= learning_rate*predict_error[i]*sum_inner_output[1]*training_data[i][1];
-      }
-      for (auto i = 0;i < 4;++i) {
+        weight[0][0] -= learning_rate*predict_error[i]*sum_inner_output[0];
+        weight[0][1] -= learning_rate*predict_error[i]*sum_inner_output[0];
+        weight[1][0] -= learning_rate*predict_error[i]*sum_inner_output[1];
+        weight[1][1] -= learning_rate*predict_error[i]*sum_inner_output[1];
         weight[0][2] -= learning_rate*predict_error[i];
         weight[1][2] -= learning_rate*predict_error[i];
       }
 //#define DEBUG
 #ifndef DEBUG
+      std::cout << sum_inner_output[0] << ' ' << sum_inner_output[1] << '\n';
       std::cout << weight[0][0] << ' ' << weight[0][1] << ' ' << weight[0][2] << '\n';
       std::cout << weight[1][0] << ' ' << weight[1][1] << ' ' << weight[1][2] << '\n';
       std::cout << weight2[0]   << ' ' << weight2[1]   << ' ' << weight2[2]   << '\n';
