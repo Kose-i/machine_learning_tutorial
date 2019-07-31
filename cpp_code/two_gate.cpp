@@ -10,7 +10,14 @@ struct Data_training_pair{
 constexpr double sigmoid(const double& t) {
   return 1/(1+std::exp(-t));
 }
+constexpr double sigmoid(const int& t) {
+  return 1/(1+std::exp(-t));
+}
 constexpr double  sigmoid_df(const double& t) {
+  double tmp = sigmoid(t);
+  return tmp*(1-tmp);
+}
+constexpr double  sigmoid_df(const int& t) {
   double tmp = sigmoid(t);
   return tmp*(1-tmp);
 }
@@ -48,20 +55,16 @@ class TwoGate{
     double predict(const std::vector<int>& dataTest) const {
       std::vector<double> tmp_output(2,0.0);
       for (auto i = 0;i < 2;++i) {
-        tmp_output[i] = weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2];
+        tmp_output[i] = sigmoid(weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2]);
       }
-      double answer = tmp_output[0]*weight2[0]+tmp_output[1]*weight2[1]+weight2[2];
-      if (answer < 0) return 0;
-      else if (1 < answer) return 1;
+      double answer = sigmoid(tmp_output[0]*weight2[0]+tmp_output[1]*weight2[1]+weight2[2]);
       return answer;
     }
     double predict(const std::vector<int>& dataTest, std::vector<double>& output) const {
       for (auto i = 0;i < 2;++i) {
-        output[i] = weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2];
+        output[i] = sigmoid(weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2]);
       }
-      double answer = output[0]*weight2[0]+output[1]*weight2[1]+weight2[2];
-      if (answer < 0) return 0;
-      else if (1 < answer) return 1;
+      double answer = sigmoid(output[0]*weight2[0]+output[1]*weight2[1]+weight2[2]);
       return answer;
     }
     void print() {
@@ -88,17 +91,17 @@ class TwoGate{
         sum_inner_output[1] += inner_output[1];
       }
       for (auto i = 0;i < 4;++i) {
-        weight2[0] -= learning_rate*predict_error[i]*sum_inner_output[0];
-        weight2[1] -= learning_rate*predict_error[i]*sum_inner_output[1];
+        weight2[0] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[0]);
+        weight2[1] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[1]);
         weight2[2] -= learning_rate*predict_error[i];
       }
       for (auto i = 0;i < 4;++i) {
-        weight[0][0] -= learning_rate*predict_error[i]*sum_inner_output[0];
-        weight[0][1] -= learning_rate*predict_error[i]*sum_inner_output[0];
-        weight[1][0] -= learning_rate*predict_error[i]*sum_inner_output[1];
-        weight[1][1] -= learning_rate*predict_error[i]*sum_inner_output[1];
-        weight[0][2] -= learning_rate*predict_error[i];
-        weight[1][2] -= learning_rate*predict_error[i];
+        weight[0][0] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[0])*sigmoid_df(training_data[i][0]);
+        weight[0][1] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[0])*sigmoid_df(training_data[i][0]);
+        weight[0][2] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[0]);
+        weight[1][0] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[1])*sigmoid_df(training_data[i][1]);
+        weight[1][1] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[1])*sigmoid_df(training_data[i][1]);
+        weight[1][2] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[1]);
       }
 //#define DEBUG
 #ifndef DEBUG
@@ -129,7 +132,7 @@ class XOR_gate: public TwoGate
 int main(int argc, char** argv) {
   XOR_gate test;
   test.print();
-  for (auto i = 0;i < 30;++i) {
+  for (auto i = 0;i < 50;++i) {
     test.learn();
     std::cout << "now_exam:" << i << ", Error:" << test.E() << '\n';
   }
