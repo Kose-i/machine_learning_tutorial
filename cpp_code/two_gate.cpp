@@ -30,7 +30,7 @@ class TwoGate{
     std::vector<double> weight2;
     const double learning_rate;
   public:
-    TwoGate():training_data(4,std::vector<int>(2)), training_answer(4), weight(2, std::vector<double>(3)),weight2(3), learning_rate(0.3) {
+    TwoGate():training_data(4,std::vector<int>(2)), training_answer(4), weight(2, std::vector<double>(3)),weight2(3), learning_rate(0.2) {
       training_data[0] = {0,0};
       training_answer[0] = {0};
       training_data[1] = {0,1};
@@ -55,16 +55,16 @@ class TwoGate{
     double predict(const std::vector<int>& dataTest) const {
       std::vector<double> tmp_output(2,0.0);
       for (auto i = 0;i < 2;++i) {
-        tmp_output[i] = sigmoid(weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2]);
+        tmp_output[i] = weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2];
       }
-      double answer = sigmoid(tmp_output[0]*weight2[0]+tmp_output[1]*weight2[1]+weight2[2]);
+      double answer = sigmoid(tmp_output[0])*weight2[0]+sigmoid(tmp_output[1])*weight2[1]+weight2[2];
       return answer;
     }
     double predict(const std::vector<int>& dataTest, std::vector<double>& output) const {
       for (auto i = 0;i < 2;++i) {
-        output[i] = sigmoid(weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2]);
+        output[i] = weight[i][0]*dataTest[0]+weight[i][1]*dataTest[1]+weight[i][2];
       }
-      double answer = sigmoid(output[0]*weight2[0]+output[1]*weight2[1]+weight2[2]);
+      double answer = sigmoid(output[0])*weight2[0]+sigmoid(output[1])*weight2[1]+weight2[2];
       return answer;
     }
     void print() {
@@ -82,33 +82,29 @@ class TwoGate{
     void learn() {
       std::vector<double> predict_answer(4);
       std::vector<double> predict_error(4);
-      std::vector<double> sum_inner_output(2);
+      std::vector<std::vector<double>> inner_output(4, std::vector<double>(2));
       for (auto i = 0;i < 4;++i) {
-        std::vector<double> inner_output(2);
-        predict_answer[i] = predict(training_data[i], inner_output);
+        predict_answer[i] = predict(training_data[i], inner_output[i]);
         predict_error[i] = predict_answer[i] - training_answer[i];
-        sum_inner_output[0] += inner_output[0];
-        sum_inner_output[1] += inner_output[1];
       }
       for (auto i = 0;i < 4;++i) {
-        weight2[0] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[0]);
-        weight2[1] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[1]);
+        weight2[0] -= learning_rate*predict_error[i]*sigmoid(inner_output[i][0]);
+        weight2[1] -= learning_rate*predict_error[i]*sigmoid(inner_output[i][1]);
         weight2[2] -= learning_rate*predict_error[i];
       }
       for (auto i = 0;i < 4;++i) {
-        weight[0][0] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[0])*sigmoid_df(training_data[i][0]);
-        weight[0][1] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[0])*sigmoid_df(training_data[i][0]);
-        weight[0][2] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[0]);
-        weight[1][0] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[1])*sigmoid_df(training_data[i][1]);
-        weight[1][1] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[1])*sigmoid_df(training_data[i][1]);
-        weight[1][2] -= learning_rate*predict_error[i]*sigmoid_df(sum_inner_output[1]);
+        weight[0][0] -= learning_rate*predict_error[i]*sigmoid_df(inner_output[i][0])*training_data[i][0];
+        weight[0][1] -= learning_rate*predict_error[i]*sigmoid_df(inner_output[i][0])*training_data[i][1];
+        weight[0][2] -= learning_rate*predict_error[i]*sigmoid_df(inner_output[i][0]);
+        weight[1][0] -= learning_rate*predict_error[i]*sigmoid_df(inner_output[i][1])*training_data[i][0];
+        weight[1][1] -= learning_rate*predict_error[i]*sigmoid_df(inner_output[i][1])*training_data[i][1];
+        weight[1][2] -= learning_rate*predict_error[i]*sigmoid_df(inner_output[i][1]);
       }
 //#define DEBUG
 #ifndef DEBUG
-      std::cout << sum_inner_output[0] << ' ' << sum_inner_output[1] << '\n';
-      std::cout << weight[0][0] << ' ' << weight[0][1] << ' ' << weight[0][2] << '\n';
-      std::cout << weight[1][0] << ' ' << weight[1][1] << ' ' << weight[1][2] << '\n';
-      std::cout << weight2[0]   << ' ' << weight2[1]   << ' ' << weight2[2]   << '\n';
+      std::cout << "weight[0]:" << weight[0][0] << ' ' << weight[0][1] << ' ' << weight[1][2] << '\n';
+      std::cout << "weight[1]:" << weight[1][0] << ' ' << weight[1][1] << ' ' << weight[1][2] << '\n';
+      std::cout << "weight2[0]:" << weight2[0] << ' ' << weight2[1]  << ' ' << weight2[2] << '\n';
 #endif
     }
 };
@@ -132,7 +128,7 @@ class XOR_gate: public TwoGate
 int main(int argc, char** argv) {
   XOR_gate test;
   test.print();
-  for (auto i = 0;i < 50;++i) {
+  for (auto i = 0;i < 100;++i) {
     test.learn();
     std::cout << "now_exam:" << i << ", Error:" << test.E() << '\n';
   }
