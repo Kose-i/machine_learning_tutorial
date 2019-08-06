@@ -29,6 +29,9 @@ class TwoGate{
     std::vector<std::vector<double>> weight;
     std::vector<double> weight2;
     const double learning_rate;
+    /*
+    If learning rate is high, the weights slosh to and fro across the ravine.
+    */
   public:
     TwoGate():training_data(4,std::vector<int>(2)), training_answer(4), weight(2, std::vector<double>(3)),weight2(3), learning_rate(0.2) {
       training_data[0] = {0,0};

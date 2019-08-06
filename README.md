@@ -4,6 +4,8 @@
 
 [Anaconda_install](https://www.anaconda.com/distribution/#download-section)
 
+[Miniconda_install](https://docs.conda.io/en/latest/miniconda.html)
+
 ```Chainer install
 sudo apt install python3-tk
 sudo apt install python3-pip
