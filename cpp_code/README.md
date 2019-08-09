@@ -15,6 +15,6 @@ A B| Y
 
 => Ax0.5 + Bx0.5 - 0.5
 
-#参考
+# 参考
 
 [GithubのREADMEとかwikiで数式を書く](http://idken.net/posts/2017-02-28-math_github/)
