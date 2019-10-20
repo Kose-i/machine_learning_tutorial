@@ -1,10 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from math import factorial
 
-x = np.random.rand(1000)
-y = map(lambda t: 0 if t < 0.5 else 1, x)
+M = 10 # 全体の試行回数
+ave = 0.3
 
-from collections import Counter
+def comb(n, r): # nCr
+    return factorial(n) / factorial(r) / factorial(n - r)
+def binomial(x):
+    return comb(M, x)*(pow(ave, x))*(pow(1-ave, M-x))
 
-c = Counter(y)
-print(c)
+x = range(0,10,1)
+x = np.array(x)
+
+plt.plot(x, binomial(x))
+plt.show()
