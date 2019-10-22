@@ -50,7 +50,7 @@ class TwoGate{
       weight[0][2] = -3;
       weight[1][0] = 3;
       weight[1][1] = 2;
-      weight[1][2] = 5;
+      weight[1][2] = -5;
       weight2[0] = 3;
       weight2[1] = 4;
       weight2[2] = 2;
