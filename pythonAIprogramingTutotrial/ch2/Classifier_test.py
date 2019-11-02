@@ -37,7 +37,7 @@ classifier = linear_model.LogisticRegression(solver='liblinear', C=100, multi_cl
 import numpy as np
 from sklearn.naive_bayes import GaussianNB
 
-input_file = 'data_multivar_nb.txt'
+input_file = 'datasets/data_multivar_nb.txt'
 data = np.loadtxt(input_file, delimiter=',')
 X, y = data[:,:-1], data[:, -1]
 
@@ -94,4 +94,5 @@ plt.yticks(ticks, ticks)
 plt.xlabel('True label')
 plt.ylabel('Predicted labels')
 plt.show()
-
+targets = ['Class-0','Class-1','Class-2','Class-3','Class-4']
+print(classification_report(true_labels, pred_labels, target_names=targets))
