@@ -3,6 +3,7 @@ Singular value decomposition program, svdcmp, from "Numerical Recipes in C"
 (Cambridge Univ. Press) by W.H. Press, S.A. Teukolsky, W.T. Vetterling,
 and B.P. Flannery
 *******************************************************************************/
+/*Golub Reinsch*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
